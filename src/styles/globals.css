@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Rajdhani:wght@400;500;600;700&family=Anton&family=Oswald:wght@400;500;600;700&family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Rajdhani:wght@400;500;600;700&family=Anton&family=Oswald:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Special+Elite&family=Impact&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -25,8 +25,8 @@
   --background: #1A1A1A;
   --foreground: #000000;
   --primary: #FACC15;
-  --card: #FFFFFF;
-  --card-foreground: #000000;
+  --card: #18181B;              /* 改为深色：zinc-900 */
+  --card-foreground: #FFFFFF;   /* 文字改为白色 */
   --popover: #FFFFFF;
   --popover-foreground: #000000;
   --primary-foreground: #000000;
@@ -147,401 +147,215 @@ html {
   font-size: var(--font-size);
 }
 
-/* ===== 都市漫画拼贴 (Urban Comic Collage) ===== */
+/* ===== 都市编辑风 (Urban Editorial) - V3 ===== */
 
-/* 半色调网点纹理 - 漫画印刷感 */
-.halftone-dots {
+/* 质感1: 赛博玻璃 (Cyber Glass) - Slick */
+.cyber-glass {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 质感2: 拉丝金属 (Brushed Metal) - Slick */
+.brushed-metal {
+  background: 
+    linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%),
+    linear-gradient(0deg, #18181B 0%, #27272A 50%, #18181B 100%);
+  background-size: 3px 100%, 100% 100%;
   position: relative;
 }
 
-.halftone-dots::before {
+.brushed-metal::before {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.15) 1px, transparent 1px);
+  background: 
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.02) 2px,
+      rgba(255, 255, 255, 0.02) 4px
+    );
+  pointer-events: none;
+}
+
+/* 质感3: 碳纤维 (Carbon Fiber) - Slick */
+.carbon-fiber {
+  background: 
+    radial-gradient(circle at 25% 25%, rgba(0,0,0,0.8) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(0,0,0,0.8) 0%, transparent 50%),
+    #0a0a0a;
+  background-size: 8px 8px;
+  position: relative;
+}
+
+.carbon-fiber::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(45deg, transparent 48%, rgba(255,255,255,0.03) 50%, transparent 52%);
   background-size: 4px 4px;
-  opacity: 1;
+  pointer-events: none;
+}
+
+/* 质感4: 再生纸 (Recycled Paper) - Grit */
+.recycled-paper {
+  background-color: #F5F3E8;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(139, 115, 85, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(101, 84, 63, 0.02) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+  position: relative;
+}
+
+/* 质感5: 混凝土 (Concrete) - Grit */
+.concrete {
+  background-color: #D4D4D8;
+  background-image:
+    radial-gradient(circle at 15% 25%, rgba(0, 0, 0, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 85% 75%, rgba(0, 0, 0, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.04) 0%, transparent 60%);
+  position: relative;
+}
+
+/* 霓虹边框 (Neon Border) - Slick */
+.neon-border-cyan {
+  border-top: 2px solid #22D3EE;
+  border-bottom: 2px solid #22D3EE;
+  box-shadow: 
+    inset 0 2px 8px rgba(34, 211, 238, 0.2),
+    inset 0 -2px 8px rgba(34, 211, 238, 0.2),
+    0 2px 16px rgba(34, 211, 238, 0.3);
+}
+
+.neon-border-fuchsia {
+  border-top: 2px solid #D946EF;
+  border-bottom: 2px solid #D946EF;
+  box-shadow: 
+    inset 0 2px 8px rgba(217, 70, 239, 0.2),
+    inset 0 -2px 8px rgba(217, 70, 239, 0.2),
+    0 2px 16px rgba(217, 70, 239, 0.3);
+}
+
+.neon-border-lime {
+  border-top: 2px solid #A3E635;
+  border-bottom: 2px solid #A3E635;
+  box-shadow: 
+    inset 0 2px 8px rgba(163, 230, 53, 0.2),
+    inset 0 -2px 8px rgba(163, 230, 53, 0.2),
+    0 2px 16px rgba(163, 230, 53, 0.3);
+}
+
+/* 虚线警告框 (Dashed Warning) - Grit */
+.dashed-warning {
+  border: 2px dashed #FACC15;
+  box-shadow: 
+    inset 0 0 20px rgba(250, 204, 21, 0.1),
+    0 0 20px rgba(250, 204, 21, 0.2);
+}
+
+/* 撕裂边缘 (Torn Edge) - Grit */
+.torn-edge {
+  position: relative;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0,0 L0,95 L2,97 L4,95 L6,98 L8,96 L10,99 L12,97 L14,98 L16,96 L18,99 L20,97 L22,98 L24,96 L26,99 L28,97 L30,98 L32,96 L34,99 L36,97 L38,98 L40,96 L42,99 L44,97 L46,98 L48,96 L50,99 L52,97 L54,98 L56,96 L58,99 L60,97 L62,98 L64,96 L66,99 L68,97 L70,98 L72,96 L74,99 L76,97 L78,98 L80,96 L82,99 L84,97 L86,98 L88,96 L90,99 L92,97 L94,98 L96,96 L98,99 L100,97 L100,0 Z' fill='white'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0,0 L0,95 L2,97 L4,95 L6,98 L8,96 L10,99 L12,97 L14,98 L16,96 L18,99 L20,97 L22,98 L24,96 L26,99 L28,97 L30,98 L32,96 L34,99 L36,97 L38,98 L40,96 L42,99 L44,97 L46,98 L48,96 L50,99 L52,97 L54,98 L56,96 L58,99 L60,97 L62,98 L64,96 L66,99 L68,97 L70,98 L72,96 L74,99 L76,97 L78,98 L80,96 L82,99 L84,97 L86,98 L88,96 L90,99 L92,97 L94,98 L96,96 L98,99 L100,97 L100,0 Z' fill='white'/%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+/* 噪点滤镜 (Noise Filter) - Grit */
+.noise-overlay {
+  position: relative;
+}
+
+.noise-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='4' /%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
+  opacity: 0.3;
   pointer-events: none;
   z-index: 1;
 }
 
-/* 漫画面板 - 核心组件 */
-.comic-panel {
-  background-color: var(--panel-bg, #FFFFFF);
-  border: 4px solid #000000;
-  box-shadow: 6px 6px 0px 0px #000000;
+/* 扫描线效果 (Scanlines) - Grit */
+.scanlines {
   position: relative;
-  transform: rotate(var(--panel-rotation, 0deg));
 }
 
-/* 漫画面板内容 - 反向旋转保持水平 */
-.comic-panel-content {
-  transform: rotate(calc(-1 * var(--panel-rotation, 0deg)));
-}
-
-/* 拍立得照片风格 */
-.polaroid-photo {
-  background: #FFFFFF;
-  border: 4px solid #000000;
-  box-shadow: 6px 6px 0px 0px #000000;
-  padding: 0.75rem;
-  padding-bottom: 3.5rem;
-  position: relative;
-  transform: rotate(var(--photo-rotation, 3deg));
-}
-
-.polaroid-photo img {
-  width: 100%;
-  height: auto;
-  border: 3px solid #000000;
-}
-
-/* 曲别针装饰 */
-.paperclip {
-  position: absolute;
-  top: -20px;
-  right: 50%;
-  transform: translateX(50%);
-  width: 50px;
-  height: 80px;
-  z-index: 10;
-  pointer-events: none;
-}
-
-.paperclip::before {
-  content: '';
-  position: absolute;
-  width: 35px;
-  height: 70px;
-  border: 4px solid #888;
-  border-radius: 20px 20px 5px 5px;
-  border-bottom: none;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
-  box-shadow: inset -2px -2px 4px rgba(0,0,0,0.2);
-}
-
-/* 透明胶带装饰 */
-.tape {
-  position: absolute;
-  width: 100px;
-  height: 30px;
-  background: rgba(255, 255, 255, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  pointer-events: none;
-  z-index: 10;
-}
-
-.tape::before {
+.scanlines::before {
   content: '';
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(
-    90deg,
-    transparent,
-    transparent 3px,
-    rgba(255, 255, 255, 0.1) 3px,
-    rgba(255, 255, 255, 0.1) 6px
+    0deg,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0.15) 1px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0) 4px
   );
+  pointer-events: none;
+  z-index: 2;
 }
 
-/* 漫画标题文字 - 粗黑描边 */
-.comic-title {
-  font-family: 'Bangers', cursive;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--title-color, #000000);
-  -webkit-text-stroke: 3px #000;
-  paint-order: stroke fill;
-}
-
-/* 拟声词 - SFX 爆炸形状 */
-.sfx-burst {
-  font-family: 'Bangers', cursive;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+/* CCTV监控效果 */
+.cctv-effect {
+  filter: contrast(1.2) brightness(0.9);
   position: relative;
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background: var(--sfx-bg, #FACC15);
-  border: 4px solid #000000;
-  color: var(--sfx-color, #000000);
-  transform: rotate(var(--sfx-rotation, -8deg));
-  -webkit-text-stroke: 2px #000;
-  paint-order: stroke fill;
-  clip-path: polygon(
-    10% 0%, 30% 5%, 50% 0%, 70% 5%, 90% 0%, 100% 10%, 
-    95% 30%, 100% 50%, 95% 70%, 100% 90%, 90% 100%, 
-    70% 95%, 50% 100%, 30% 95%, 10% 100%, 0% 90%, 
-    5% 70%, 0% 50%, 5% 30%, 0% 10%
-  );
-  box-shadow: 5px 5px 0px 0px #000000;
 }
 
-/* 漫画按钮 */
-.comic-button {
-  font-family: 'Bangers', cursive;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 0.875rem 2rem;
-  background: var(--button-bg, #FACC15);
-  color: #000000;
-  border: 4px solid #000000;
-  box-shadow: 5px 5px 0px 0px #000000;
-  cursor: pointer;
-  transition: all 0.1s ease;
-  position: relative;
-  font-size: 1.125rem;
-}
-
-.comic-button:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 7px 7px 0px 0px #000000;
-}
-
-.comic-button:active {
-  transform: translate(3px, 3px);
-  box-shadow: 2px 2px 0px 0px #000000;
-}
-
-/* 漫画输入框 */
-.comic-input {
-  font-family: 'Rajdhani', sans-serif;
-  font-weight: 600;
-  padding: 0.875rem 1.25rem;
-  background: #FFFFFF;
-  color: #000000;
-  border: 4px solid #000000;
-  box-shadow: inset 3px 3px 0px 0px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease;
-}
-
-.comic-input:focus {
-  outline: none;
-  box-shadow: 
-    inset 3px 3px 0px 0px rgba(0, 0, 0, 0.1),
-    0 0 0 4px var(--input-focus, #FACC15);
-}
-
-.comic-input::placeholder {
-  color: #999;
-  font-weight: 500;
-}
-
-/* 漫画进度条 */
-.comic-progress {
-  background: #E5E7EB;
-  border: 3px solid #000000;
-  height: 2rem;
-  position: relative;
-  overflow: hidden;
-  box-shadow: inset 3px 3px 0px 0px rgba(0, 0, 0, 0.15);
-}
-
-.comic-progress-bar {
-  height: 100%;
-  background: var(--progress-color, #FACC15);
-  border-right: 3px solid #000000;
-  position: relative;
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  
-  /* 对角线条纹 */
-  background-image: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 8px,
-    rgba(0, 0, 0, 0.1) 8px,
-    rgba(0, 0, 0, 0.1) 16px
-  );
-}
-
-/* 漫画对话气泡 */
-.comic-speech-bubble {
-  background: #FFFFFF;
-  border: 4px solid #000000;
-  border-radius: 1.25rem;
-  padding: 1.25rem 1.75rem;
-  position: relative;
-  box-shadow: 5px 5px 0px 0px #000000;
-}
-
-.comic-speech-bubble::after {
+.cctv-effect::after {
   content: '';
   position: absolute;
-  bottom: -18px;
-  left: 40px;
-  width: 0;
-  height: 0;
-  border-left: 18px solid transparent;
-  border-right: 0px solid transparent;
-  border-top: 18px solid #000000;
-}
-
-.comic-speech-bubble::before {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 44px;
-  width: 0;
-  height: 0;
-  border-left: 14px solid transparent;
-  border-right: 0px solid transparent;
-  border-top: 14px solid #FFFFFF;
+  inset: 0;
+  background: 
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px),
+    radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.2) 100%);
+  pointer-events: none;
   z-index: 1;
 }
 
-/* 漫画头像 */
-.comic-avatar {
-  position: relative;
-  border: 4px solid #000000;
-  box-shadow: 4px 4px 0px 0px #000000;
-  overflow: hidden;
-  background: #FFFFFF;
+/* 霓虏光辉 (Neon Glow) - Slick */
+.neon-glow-cyan {
+  color: #22D3EE;
+  text-shadow: 
+    0 0 10px rgba(34, 211, 238, 0.8),
+    0 0 20px rgba(34, 211, 238, 0.6),
+    0 0 30px rgba(34, 211, 238, 0.4);
 }
 
-/* 徽章/标签 */
-.comic-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1.25rem;
-  font-family: 'Bangers', cursive;
+.neon-glow-fuchsia {
+  color: #D946EF;
+  text-shadow: 
+    0 0 10px rgba(217, 70, 239, 0.8),
+    0 0 20px rgba(217, 70, 239, 0.6),
+    0 0 30px rgba(217, 70, 239, 0.4);
+}
+
+.neon-glow-lime {
+  color: #A3E635;
+  text-shadow: 
+    0 0 10px rgba(163, 230, 53, 0.8),
+    0 0 20px rgba(163, 230, 53, 0.6),
+    0 0 30px rgba(163, 230, 53, 0.4);
+}
+
+.neon-glow-yellow {
+  color: #FACC15;
+  text-shadow: 
+    0 0 10px rgba(250, 204, 21, 0.8),
+    0 0 20px rgba(250, 204, 21, 0.6),
+    0 0 30px rgba(250, 204, 21, 0.4);
+}
+
+/* 都市编辑风标题 - GTA Logo风格 */
+.gta-title {
+  font-family: 'Anton', 'Impact', sans-serif;
+  font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.875rem;
-  background: var(--badge-bg, #FACC15);
-  color: var(--badge-color, #000000);
-  border: 3px solid #000000;
-  box-shadow: 4px 4px 0px 0px #000000;
-  transform: rotate(var(--badge-rotation, 0deg));
+  letter-spacing: 0.02em;
+  line-height: 0.9;
 }
-
-/* 笔记本纸风格 */
-.notebook-paper {
-  background: #FFFEF5;
-  border: 4px solid #000000;
-  box-shadow: 6px 6px 0px 0px #000000;
-  position: relative;
-  padding: 2rem 2rem 2rem 3rem;
-  
-  /* 横线纹理 */
-  background-image: repeating-linear-gradient(
-    transparent,
-    transparent 27px,
-    rgba(150, 150, 150, 0.4) 27px,
-    rgba(150, 150, 150, 0.4) 29px
-  );
-}
-
-.notebook-paper::before {
-  content: '';
-  position: absolute;
-  left: 2.5rem;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: rgba(255, 100, 100, 0.4);
-}
-
-/* 打字机文字 */
-.typewriter-text {
-  font-family: 'Special Elite', cursive;
-  letter-spacing: 0.03em;
-  line-height: 1.8;
-}
-
-/* 手写圈注 */
-.handwritten-circle {
-  position: absolute;
-  border: 3px solid #EF4444;
-  border-radius: 50%;
-  transform: rotate(-12deg);
-  pointer-events: none;
-}
-
-/* 滚动条 - 漫画风格 */
-.comic-scroll::-webkit-scrollbar {
-  width: 16px;
-}
-
-.comic-scroll::-webkit-scrollbar-track {
-  background: #F5F5F5;
-  border: 3px solid #000000;
-}
-
-.comic-scroll::-webkit-scrollbar-thumb {
-  background: var(--scroll-color, #FACC15);
-  border: 3px solid #000000;
-}
-
-.comic-scroll::-webkit-scrollbar-thumb:hover {
-  background: var(--scroll-hover, #FDE047);
-}
-
-/* 动画效果 */
-
-/* 弹跳进入 */
-@keyframes pop-in {
-  0% {
-    transform: scale(0) rotate(-180deg);
-    opacity: 0;
-  }
-  70% {
-    transform: scale(1.1) rotate(10deg);
-  }
-  100% {
-    transform: scale(1) rotate(0deg);
-    opacity: 1;
-  }
-}
-
-.pop-in {
-  animation: pop-in 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-/* 抖动 */
-@keyframes shake {
-  0%, 100% { transform: translateX(0) rotate(0deg); }
-  25% { transform: translateX(-8px) rotate(-3deg); }
-  50% { transform: translateX(8px) rotate(3deg); }
-  75% { transform: translateX(-5px) rotate(-2deg); }
-}
-
-.shake {
-  animation: shake 0.5s ease-in-out;
-}
-
-/* 快速缩放 */
-@keyframes bounce-scale {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.08); }
-}
-
-.bounce-scale {
-  animation: bounce-scale 0.3s ease-in-out;
-}
-
-/* 涂鸦装饰类 */
-.graffiti-splash {
-  position: absolute;
-  pointer-events: none;
-  filter: blur(50px);
-  opacity: 0.6;
-}
-
-/* 斜线纹理 */
-.diagonal-stripes {
-  background-image: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 12px,
-    rgba(0, 0, 0, 0.08) 12px,
-    rgba(0, 0, 0, 0.08) 24px
-  );
-}
-
-/* 倾斜角度辅助类 */
-.angled-left { --panel-rotation: -2deg; }
-.angled-right { --panel-rotation: 2deg; }
-.angled-left-strong { --panel-rotation: -3deg; }
-.angled-right-strong { --panel-rotation: 3deg; }

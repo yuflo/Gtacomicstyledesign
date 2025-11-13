@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, MapPin, Star } from 'lucide-react';
+import { User, MapPin, Star, AlertTriangle } from 'lucide-react';
 
 interface Stat {
   name: string;
@@ -35,96 +35,94 @@ const stats: Stat[] = [
 
 export function CharacterPanel() {
   return (
-    <div className="comic-panel angled-right h-[85vh] flex flex-col relative overflow-hidden"
-         style={{ '--panel-bg': '#FFFFFF' } as React.CSSProperties}>
-      
-      {/* 曲别针装饰 */}
-      <div className="paperclip"></div>
-      
-      {/* SFX装饰 */}
-      <div className="absolute top-8 right-8 z-20 sfx-burst pointer-events-none"
-           style={{ 
-             '--sfx-bg': '#A3E635',
-             '--sfx-color': '#000000',
-             '--sfx-rotation': '8deg',
-             fontSize: '1.5rem'
-           } as React.CSSProperties}>
-        POW!
-      </div>
+    <div className="h-full flex flex-col relative overflow-visible concrete dashed-warning">
+      {/* 优化1: 混凝土质感 + 虚线警告框（Grit） */}
       
       {/* 面板内容 */}
-      <div className="comic-panel-content flex flex-col h-full relative z-10">
+      <div className="relative z-10 flex flex-col h-full overflow-hidden">
         {/* 顶部标题栏 */}
-        <div className="p-6 pb-5 border-b-4 border-black halftone-dots">
+        <div className="p-6 pb-5 border-b-2 border-dashed border-yellow-600/50">
           <div className="flex items-center gap-4 mb-4">
             {/* 图标容器 */}
-            <div className="p-3 border-4 border-black"
-                 style={{ 
-                   background: '#A3E635',
-                   boxShadow: '5px 5px 0 #000000'
-                 }}>
-              <User className="text-black" strokeWidth={3} size={32} />
+            <div className="p-3 bg-lime-500/30 border-2 border-lime-600"
+                 style={{ boxShadow: '4px 4px 0 rgba(0,0,0,0.3)' }}>
+              <User className="text-lime-700" strokeWidth={2.5} size={28} />
             </div>
             
-            <h2 className="comic-title text-5xl"
-                style={{ '--title-color': '#A3E635', color: '#A3E635' } as React.CSSProperties}>
+            {/* 优化4: Orbitron标题（Slick） */}
+            <h2 className="text-4xl uppercase tracking-tight text-lime-700"
+                style={{ 
+                  fontFamily: 'Orbitron, sans-serif',
+                  fontWeight: 800,
+                  textShadow: '2px 2px 0 rgba(0,0,0,0.2)'
+                }}>
               ENTITY FOCUS
             </h2>
           </div>
           
-          <p className="text-sm uppercase tracking-widest text-black/80"
-             style={{ fontFamily: 'Anton, sans-serif', fontWeight: 400 }}>
+          <p className="text-xs uppercase tracking-widest text-zinc-600 font-mono">
             目标档案 // TARGET FILE
           </p>
         </div>
         
-        <div className="p-6 flex-1 overflow-y-auto comic-scroll diagonal-stripes"
-             style={{ '--scroll-color': '#A3E635' } as React.CSSProperties}>
+        <div className="p-6 flex-1 overflow-y-auto"
+             style={{
+               scrollbarWidth: 'thin',
+               scrollbarColor: '#A3E635 #D4D4D8'
+             }}>
           
-          {/* 拍立得照片风格角色图片 */}
-          <div className="polaroid-photo mb-6"
-               style={{ '--photo-rotation': '-4deg' } as React.CSSProperties}>
-            <img 
-              src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=600&h=600&fit=crop"
-              alt="角色插画"
-            />
-            
-            {/* 照片底部手写文字 */}
-            <div className="absolute bottom-3 left-0 right-0 text-center typewriter-text"
+          {/* 优化5: 角色图片溢出破坏网格 */}
+          <div className="relative mb-6 -mx-8 -mt-2">
+            <div className="recycled-paper p-3 pb-12 border-2 border-black relative overflow-hidden transform rotate-2"
                  style={{ 
-                   fontSize: '1.5rem',
-                   color: '#000000',
-                   fontWeight: 400
+                   boxShadow: '6px 6px 0 rgba(0,0,0,0.3)',
+                   zIndex: 50
                  }}>
-              KIRA // #4782
-            </div>
-            
-            {/* SFX星形装饰 */}
-            <div className="absolute -top-6 -right-6 sfx-burst"
-                 style={{ 
-                   '--sfx-bg': '#FACC15',
-                   '--sfx-color': '#000000',
-                   '--sfx-rotation': '20deg',
-                   fontSize: '2.5rem',
-                   padding: '0.5rem 1rem'
-                 } as React.CSSProperties}>
-              ★
-            </div>
-            
-            {/* 警告标签 */}
-            <div className="absolute top-6 left-6 comic-badge"
-                 style={{ 
-                   '--badge-bg': '#EF4444',
-                   '--badge-color': '#FFFFFF',
-                   '--badge-rotation': '-12deg',
-                   fontSize: '0.75rem'
-                 } as React.CSSProperties}>
-              DANGEROUS
+              {/* 优化3: 图像Grit化 - 噪点+扫描线+CCTV */}
+              <div className="relative noise-overlay cctv-effect">
+                <img 
+                  src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=600&h=600&fit=crop"
+                  alt="角色插画"
+                  className="w-full border-4 border-black"
+                  style={{ filter: 'contrast(1.15) saturate(0.9)' }}
+                />
+                
+                {/* 扫描线叠加 */}
+                <div className="absolute inset-0 scanlines pointer-events-none"></div>
+                
+                {/* 半色调网点叠加 */}
+                <div className="absolute inset-0 pointer-events-none opacity-40"
+                     style={{
+                       backgroundImage: 'radial-gradient(circle, rgba(0, 0, 0, 0.3) 1px, transparent 1px)',
+                       backgroundSize: '4px 4px'
+                     }}></div>
+              </div>
+              
+              {/* 照片底部手写文字 */}
+              <div className="absolute bottom-3 left-0 right-0 text-center font-mono font-bold"
+                   style={{ 
+                     fontSize: '1.25rem',
+                     color: '#000000'
+                   }}>
+                KIRA // #4782
+              </div>
+              
+              {/* 危险标签 - 优化5: 溢出元素 */}
+              <div className="absolute -top-3 -right-3 bg-red-500 text-white px-4 py-2 font-mono text-sm font-bold uppercase border-2 border-white transform -rotate-12 animate-pulse"
+                   style={{ 
+                     boxShadow: '0 0 20px rgba(239, 68, 68, 0.8)',
+                     zIndex: 60
+                   }}>
+                <div className="flex items-center gap-2">
+                  <AlertTriangle size={16} strokeWidth={3} />
+                  DANGEROUS
+                </div>
+              </div>
             </div>
           </div>
 
           {/* 状态条 */}
-          <div className="space-y-5 mb-6">
+          <div className="space-y-4 mb-6">
             {stats.map((stat) => {
               const percentage = (stat.value / stat.max) * 100;
               const isLow = percentage < 25;
@@ -132,53 +130,57 @@ export function CharacterPanel() {
               
               return (
                 <div key={stat.name} 
-                     className="comic-panel p-5 halftone-dots"
-                     style={{ 
-                       '--panel-bg': '#FFFFFF',
-                       '--panel-rotation': '0deg'
-                     } as React.CSSProperties}>
-                  <div className="comic-panel-content">
-                    <div className="mb-4 flex justify-between items-center flex-wrap gap-2">
+                     className="recycled-paper p-4 border-2 border-zinc-800 relative overflow-hidden"
+                     style={{ boxShadow: '3px 3px 0 rgba(0,0,0,0.2)' }}>
+                  {/* 半色调网点 */}
+                  <div className="absolute inset-0 pointer-events-none opacity-20"
+                       style={{
+                         backgroundImage: 'radial-gradient(circle, rgba(0, 0, 0, 0.2) 1px, transparent 1px)',
+                         backgroundSize: '4px 4px'
+                       }}></div>
+                  
+                  <div className="relative z-10">
+                    <div className="mb-3 flex justify-between items-center flex-wrap gap-2">
                       <div className="flex items-center gap-3">
-                        <span className="comic-title text-4xl" style={{ 
+                        {/* 优化4: Mono字体属性（Grit） */}
+                        <span className="text-3xl uppercase tracking-tight font-mono font-black" style={{ 
                           color: displayColor,
-                          '--title-color': displayColor
-                        } as React.CSSProperties}>
+                          textShadow: '2px 2px 0 rgba(0,0,0,0.2)'
+                        }}>
                           {stat.name}
                         </span>
-                        <span className="text-sm uppercase tracking-wider opacity-70"
-                              style={{ fontFamily: 'Anton, sans-serif', fontWeight: 400 }}>
+                        <span className="text-xs uppercase tracking-wider text-zinc-600 font-mono font-bold">
                           {stat.label}
                         </span>
                       </div>
-                      <span className="text-base px-4 py-2 border-3 border-black"
+                      <span className="text-sm px-3 py-1.5 font-mono font-black border-2 uppercase"
                             style={{ 
-                              fontFamily: 'Bangers, cursive',
                               background: displayColor,
                               color: '#000000',
-                              fontSize: '1.25rem'
+                              borderColor: displayColor,
+                              boxShadow: '2px 2px 0 rgba(0,0,0,0.3)'
                             }}>
                         {stat.value}/{stat.max}
                       </span>
                     </div>
-                    <div className="comic-progress">
+                    
+                    {/* 进度条 */}
+                    <div className="h-6 bg-zinc-300 border-2 border-black relative overflow-hidden"
+                         style={{ boxShadow: 'inset 2px 2px 4px rgba(0,0,0,0.2)' }}>
                       <div
-                        className="comic-progress-bar"
+                        className="h-full border-r-2 border-black transition-all duration-300"
                         style={{ 
                           width: `${percentage}%`,
-                          '--progress-color': displayColor
-                        } as React.CSSProperties}
+                          background: displayColor,
+                          backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 6px, rgba(0,0,0,0.1) 6px, rgba(0,0,0,0.1) 12px)'
+                        }}
                       ></div>
                     </div>
                     
                     {/* 低血量警告 */}
                     {isLow && (
-                      <div className="mt-4 comic-badge text-sm text-center w-full shake"
-                           style={{ 
-                             '--badge-bg': '#EF4444',
-                             '--badge-color': '#FFFFFF',
-                             '--badge-rotation': '0deg'
-                           } as React.CSSProperties}>
+                      <div className="mt-3 bg-red-500 text-white px-3 py-1.5 text-xs font-mono font-bold uppercase text-center border-2 border-white animate-pulse"
+                           style={{ boxShadow: '0 0 15px rgba(239, 68, 68, 0.6)' }}>
                         WARNING: CRITICAL
                       </div>
                     )}
@@ -188,48 +190,45 @@ export function CharacterPanel() {
             })}
           </div>
 
-          {/* 信息卡片 - 笔记本纸风格 */}
-          <div className="space-y-5">
-            <div className="notebook-paper">
-              <div className="flex justify-between items-center typewriter-text">
+          {/* 信息卡片 */}
+          <div className="space-y-4">
+            <div className="recycled-paper p-4 border-2 border-zinc-800 relative"
+                 style={{ boxShadow: '3px 3px 0 rgba(0,0,0,0.2)' }}>
+              {/* 半色调网点 */}
+              <div className="absolute inset-0 pointer-events-none opacity-20"
+                   style={{
+                     backgroundImage: 'radial-gradient(circle, rgba(0, 0, 0, 0.2) 1px, transparent 1px)',
+                     backgroundSize: '4px 4px'
+                   }}></div>
+              
+              <div className="relative z-10 flex justify-between items-center font-mono">
                 <div className="flex items-center gap-3">
-                  <MapPin size={20} strokeWidth={3} />
-                  <span className="text-sm uppercase tracking-wider"
-                        style={{ fontFamily: 'Anton, sans-serif', fontWeight: 700 }}>
+                  <MapPin size={18} strokeWidth={2.5} className="text-zinc-700" />
+                  <span className="text-xs uppercase tracking-wider font-bold text-zinc-700">
                     LOCATION
                   </span>
                 </div>
-                <span className="comic-badge text-sm"
-                      style={{ 
-                        '--badge-bg': '#3B82F6',
-                        '--badge-color': '#FFFFFF',
-                        '--badge-rotation': '0deg'
-                      } as React.CSSProperties}>
+                <span className="text-xs px-3 py-1.5 bg-blue-500 text-white font-bold border-2 border-blue-700 uppercase"
+                      style={{ boxShadow: '2px 2px 0 rgba(0,0,0,0.3)' }}>
                   香港·深水埗
                 </span>
               </div>
-              
-              {/* 手写圈注装饰 */}
-              <div className="handwritten-circle"
-                   style={{ 
-                     top: '5px',
-                     right: '30px',
-                     width: '120px',
-                     height: '60px'
-                   }}></div>
             </div>
             
-            <div className="comic-panel p-5 halftone-dots"
-                 style={{ 
-                   '--panel-bg': '#FFFFFF',
-                   '--panel-rotation': '1deg'
-                 } as React.CSSProperties}>
-              <div className="comic-panel-content">
+            <div className="recycled-paper p-4 border-2 border-zinc-800 relative"
+                 style={{ boxShadow: '3px 3px 0 rgba(0,0,0,0.2)' }}>
+              {/* 半色调网点 */}
+              <div className="absolute inset-0 pointer-events-none opacity-20"
+                   style={{
+                     backgroundImage: 'radial-gradient(circle, rgba(0, 0, 0, 0.2) 1px, transparent 1px)',
+                     backgroundSize: '4px 4px'
+                   }}></div>
+              
+              <div className="relative z-10">
                 <div className="flex justify-between items-center flex-wrap gap-3">
-                  <div className="flex items-center gap-3">
-                    <Star size={20} strokeWidth={3} />
-                    <span className="text-sm uppercase tracking-wider"
-                          style={{ fontFamily: 'Anton, sans-serif', fontWeight: 700 }}>
+                  <div className="flex items-center gap-3 font-mono">
+                    <Star size={18} strokeWidth={2.5} className="text-zinc-700" />
+                    <span className="text-xs uppercase tracking-wider font-bold text-zinc-700">
                       WANTED LEVEL
                     </span>
                   </div>
@@ -237,24 +236,16 @@ export function CharacterPanel() {
                     {[1, 2, 3, 4, 5].map((star) => {
                       const isFilled = star <= 2;
                       return (
-                        <div
+                        <Star
                           key={star}
-                          className="relative"
+                          size={24}
+                          strokeWidth={2.5}
+                          fill={isFilled ? '#EF4444' : 'transparent'}
+                          className="text-red-600"
                           style={{
-                            width: '28px',
-                            height: '28px'
+                            filter: isFilled ? 'drop-shadow(0 0 6px #EF4444)' : 'none'
                           }}
-                        >
-                          <Star
-                            size={28}
-                            strokeWidth={3}
-                            fill={isFilled ? '#EF4444' : '#FFFFFF'}
-                            className="text-black"
-                            style={{
-                              filter: isFilled ? 'drop-shadow(0 0 8px #EF4444)' : 'none'
-                            }}
-                          />
-                        </div>
+                        />
                       );
                     })}
                   </div>

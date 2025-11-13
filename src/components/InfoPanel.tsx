@@ -49,8 +49,8 @@ const badgeConfig = {
   },
   rumor: { 
     label: 'RUMOR',
-    bg: '#FFFFFF',
-    color: '#000000',
+    bg: '#71717A',
+    color: '#FFFFFF',
     icon: MessageSquare
   },
   social: { 
@@ -69,102 +69,97 @@ const badgeConfig = {
 
 export function InfoPanel() {
   return (
-    <div className="comic-panel angled-left h-[85vh] flex flex-col relative overflow-hidden"
-         style={{ '--panel-bg': '#1E1B4B' } as React.CSSProperties}>
+    <div className="h-full flex flex-col relative overflow-hidden cyber-glass neon-border-fuchsia">
+      {/* 优化1: 赛博玻璃 + 霓虹边框（Slick） */}
       
-      {/* 曲别针装饰 */}
-      <div className="paperclip"></div>
-      
-      {/* SFX装饰 */}
-      <div className="absolute top-8 right-8 z-20 sfx-burst pointer-events-none"
-           style={{ 
-             '--sfx-bg': '#D946EF',
-             '--sfx-color': '#FFFFFF',
-             '--sfx-rotation': '12deg',
-             fontSize: '1.5rem'
-           } as React.CSSProperties}>
-        LIVE!
-      </div>
+      {/* 碳纤维纹理叠加 */}
+      <div className="absolute inset-0 carbon-fiber opacity-20 pointer-events-none"></div>
       
       {/* 面板内容 */}
-      <div className="comic-panel-content flex flex-col h-full relative z-10">
+      <div className="relative z-10 flex flex-col h-full">
         {/* 顶部标题栏 */}
-        <div className="p-6 pb-5 border-b-4 border-black halftone-dots">
+        <div className="p-6 pb-5 border-b border-white/10">
           <div className="flex items-center gap-4 mb-4">
             {/* 图标容器 */}
-            <div className="p-3 border-4 border-black"
-                 style={{ 
-                   background: '#D946EF',
-                   boxShadow: '5px 5px 0 #000000'
-                 }}>
-              <Radio className="text-white" strokeWidth={3} size={32} />
+            <div className="p-3 bg-fuchsia-500/20 border border-fuchsia-500/50 backdrop-blur-sm"
+                 style={{ boxShadow: '0 0 20px rgba(217, 70, 239, 0.3)' }}>
+              <Radio className="text-fuchsia-400" strokeWidth={2.5} size={28} />
             </div>
             
-            <h2 className="comic-title text-white text-5xl">
+            {/* 优化4: Orbitron标题（Slick） */}
+            <h2 className="neon-glow-fuchsia text-4xl uppercase tracking-tight"
+                style={{ 
+                  fontFamily: 'Orbitron, sans-serif',
+                  fontWeight: 800
+                }}>
               WORLD FEED
             </h2>
           </div>
           
-          <p className="text-sm uppercase tracking-widest text-white/90"
-             style={{ fontFamily: 'Anton, sans-serif', fontWeight: 400 }}>
+          <p className="text-xs uppercase tracking-widest text-fuchsia-300/60 font-mono">
             实时信息流 // LIVE BROADCAST
           </p>
         </div>
         
         {/* 信息流内容 */}
-        <div className="space-y-5 overflow-y-auto p-6 comic-scroll flex-1"
-             style={{ '--scroll-color': '#D946EF' } as React.CSSProperties}>
+        <div className="space-y-4 overflow-y-auto p-6 flex-1"
+             style={{
+               scrollbarWidth: 'thin',
+               scrollbarColor: '#D946EF #18181B'
+             }}>
           {infoItems.map((item, index) => {
             const badge = badgeConfig[item.type];
             const Icon = badge.icon;
-            const rotation = (index % 2 === 0 ? 1 : -1) * (Math.random() * 1.5 + 0.5);
             
             return (
               <div key={index} 
-                   className="comic-panel p-5 group halftone-dots"
-                   style={{ 
-                     '--panel-bg': '#FFFFFF',
-                     '--panel-rotation': `${rotation}deg`
-                   } as React.CSSProperties}>
-                <div className="comic-panel-content">
-                  <div className="flex items-center mb-4 gap-3 flex-wrap">
-                    <span className="comic-badge text-sm"
+                   className="recycled-paper p-4 relative overflow-hidden"
+                   style={{
+                     border: item.type === 'alert' ? '2px solid #EF4444' : '1px solid #3F3F46',
+                     boxShadow: item.type === 'alert' 
+                       ? '0 0 20px rgba(239, 68, 68, 0.3), inset 0 0 30px rgba(239, 68, 68, 0.1)' 
+                       : '0 2px 8px rgba(0, 0, 0, 0.3)'
+                   }}>
+                {/* 优化3: Grit质感 - 再生纸 */}
+                
+                {/* 半色调网点叠加 */}
+                <div className="absolute inset-0 pointer-events-none opacity-30"
+                     style={{
+                       backgroundImage: 'radial-gradient(circle, rgba(0, 0, 0, 0.2) 1px, transparent 1px)',
+                       backgroundSize: '4px 4px'
+                     }}></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center mb-3 gap-3 flex-wrap">
+                    {/* 优化4: Mono字体标签（Grit） */}
+                    <span className="inline-flex items-center gap-2 px-3 py-1.5 text-xs uppercase tracking-wider font-mono font-bold border-2"
                           style={{ 
-                            '--badge-bg': badge.bg,
-                            '--badge-color': badge.color,
-                            '--badge-rotation': '0deg'
-                          } as React.CSSProperties}>
-                      <Icon size={16} strokeWidth={3} />
+                            background: badge.bg,
+                            color: badge.color,
+                            borderColor: badge.bg,
+                            boxShadow: '2px 2px 0 rgba(0,0,0,0.3)'
+                          }}>
+                      <Icon size={14} strokeWidth={3} />
                       {badge.label}
                     </span>
-                    <span className="text-sm px-3 py-1.5 border-3 border-black"
-                          style={{ 
-                            fontFamily: 'Bangers, cursive',
-                            background: '#000000',
-                            color: badge.bg,
-                            fontSize: '1rem'
-                          }}>
+                    <span className="text-xs px-3 py-1.5 bg-black text-white font-mono font-bold border border-black"
+                          style={{ boxShadow: '2px 2px 0 rgba(0,0,0,0.2)' }}>
                       {item.time}
                     </span>
                   </div>
-                  <p className="text-base leading-relaxed"
+                  <p className="text-sm leading-relaxed text-zinc-800"
                      style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 600 }}>
                     {item.content}
                   </p>
                   
                   {/* 危险警报 */}
                   {item.type === 'alert' && (
-                    <div className="absolute -top-2 -right-2 shake pointer-events-none">
-                      <div className="sfx-burst"
-                           style={{ 
-                             '--sfx-bg': '#EF4444',
-                             '--sfx-color': '#FFFFFF',
-                             '--sfx-rotation': '25deg',
-                             fontSize: '1.75rem',
-                             padding: '0.5rem 0.75rem'
-                           } as React.CSSProperties}>
-                        !
-                      </div>
+                    <div className="absolute -top-2 -right-2 bg-red-500 text-white px-2 py-1 font-mono text-xs font-bold animate-pulse"
+                         style={{ 
+                           border: '2px solid #FFF',
+                           boxShadow: '0 0 15px rgba(239, 68, 68, 0.8)'
+                         }}>
+                      !
                     </div>
                   )}
                 </div>
