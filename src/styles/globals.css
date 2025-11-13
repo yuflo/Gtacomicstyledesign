@@ -1,0 +1,547 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Rajdhani:wght@400;500;600;700&family=Anton&family=Oswald:wght@400;500;600;700&family=Special+Elite&display=swap');
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  
+  /* 都市漫画拼贴配色 */
+  --base-dark: #1A1A1A;          /* 基底色 */
+  --ink-black: #000000;          /* 油墨黑 */
+  --panel-white: #FFFFFF;        /* 面板纯白 */
+  --panel-purple: #1E1B4B;       /* 深紫面板 */
+  
+  /* 涂鸦色 */
+  --graffiti-pink: #D946EF;      /* fuchsia-500 */
+  --graffiti-cyan: #22D3EE;      /* cyan-400 */
+  --graffiti-lime: #A3E635;      /* lime-400 */
+  
+  /* 强调色 */
+  --primary-yellow: #FACC15;     /* yellow-400 */
+  --accent-red: #EF4444;         /* red-500 */
+  --accent-blue: #3B82F6;        /* blue-500 */
+  
+  /* 语义化 */
+  --background: #1A1A1A;
+  --foreground: #000000;
+  --primary: #FACC15;
+  --card: #FFFFFF;
+  --card-foreground: #000000;
+  --popover: #FFFFFF;
+  --popover-foreground: #000000;
+  --primary-foreground: #000000;
+  --secondary: #3B82F6;
+  --secondary-foreground: #FFFFFF;
+  --muted: #F5F5F5;
+  --muted-foreground: #666666;
+  --accent: #EF4444;
+  --accent-foreground: #FFFFFF;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --border: #000000;
+  --input: #FFFFFF;
+  --input-background: #FFFFFF;
+  --switch-background: #D1D5DB;
+  --font-weight-medium: 600;
+  --font-weight-normal: 500;
+  --ring: #FACC15;
+  --radius: 0rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
+  }
+}
+
+/**
+ * Base typography
+ */
+@layer base {
+  :where(:not(:has([class*=' text-']), :not(:has([class^='text-'])))) {
+    h1 {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.1;
+    }
+
+    h2 {
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.1;
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.1;
+    }
+
+    h4 {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.1;
+    }
+
+    p {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.6;
+    }
+
+    label {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.1;
+    }
+
+    button {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.1;
+    }
+
+    input {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.1;
+    }
+  }
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+/* ===== 都市漫画拼贴 (Urban Comic Collage) ===== */
+
+/* 半色调网点纹理 - 漫画印刷感 */
+.halftone-dots {
+  position: relative;
+}
+
+.halftone-dots::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.15) 1px, transparent 1px);
+  background-size: 4px 4px;
+  opacity: 1;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 漫画面板 - 核心组件 */
+.comic-panel {
+  background-color: var(--panel-bg, #FFFFFF);
+  border: 4px solid #000000;
+  box-shadow: 6px 6px 0px 0px #000000;
+  position: relative;
+  transform: rotate(var(--panel-rotation, 0deg));
+}
+
+/* 漫画面板内容 - 反向旋转保持水平 */
+.comic-panel-content {
+  transform: rotate(calc(-1 * var(--panel-rotation, 0deg)));
+}
+
+/* 拍立得照片风格 */
+.polaroid-photo {
+  background: #FFFFFF;
+  border: 4px solid #000000;
+  box-shadow: 6px 6px 0px 0px #000000;
+  padding: 0.75rem;
+  padding-bottom: 3.5rem;
+  position: relative;
+  transform: rotate(var(--photo-rotation, 3deg));
+}
+
+.polaroid-photo img {
+  width: 100%;
+  height: auto;
+  border: 3px solid #000000;
+}
+
+/* 曲别针装饰 */
+.paperclip {
+  position: absolute;
+  top: -20px;
+  right: 50%;
+  transform: translateX(50%);
+  width: 50px;
+  height: 80px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.paperclip::before {
+  content: '';
+  position: absolute;
+  width: 35px;
+  height: 70px;
+  border: 4px solid #888;
+  border-radius: 20px 20px 5px 5px;
+  border-bottom: none;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+  box-shadow: inset -2px -2px 4px rgba(0,0,0,0.2);
+}
+
+/* 透明胶带装饰 */
+.tape {
+  position: absolute;
+  width: 100px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.tape::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 3px,
+    rgba(255, 255, 255, 0.1) 3px,
+    rgba(255, 255, 255, 0.1) 6px
+  );
+}
+
+/* 漫画标题文字 - 粗黑描边 */
+.comic-title {
+  font-family: 'Bangers', cursive;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--title-color, #000000);
+  -webkit-text-stroke: 3px #000;
+  paint-order: stroke fill;
+}
+
+/* 拟声词 - SFX 爆炸形状 */
+.sfx-burst {
+  font-family: 'Bangers', cursive;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  position: relative;
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--sfx-bg, #FACC15);
+  border: 4px solid #000000;
+  color: var(--sfx-color, #000000);
+  transform: rotate(var(--sfx-rotation, -8deg));
+  -webkit-text-stroke: 2px #000;
+  paint-order: stroke fill;
+  clip-path: polygon(
+    10% 0%, 30% 5%, 50% 0%, 70% 5%, 90% 0%, 100% 10%, 
+    95% 30%, 100% 50%, 95% 70%, 100% 90%, 90% 100%, 
+    70% 95%, 50% 100%, 30% 95%, 10% 100%, 0% 90%, 
+    5% 70%, 0% 50%, 5% 30%, 0% 10%
+  );
+  box-shadow: 5px 5px 0px 0px #000000;
+}
+
+/* 漫画按钮 */
+.comic-button {
+  font-family: 'Bangers', cursive;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.875rem 2rem;
+  background: var(--button-bg, #FACC15);
+  color: #000000;
+  border: 4px solid #000000;
+  box-shadow: 5px 5px 0px 0px #000000;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  position: relative;
+  font-size: 1.125rem;
+}
+
+.comic-button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0px 0px #000000;
+}
+
+.comic-button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 2px 2px 0px 0px #000000;
+}
+
+/* 漫画输入框 */
+.comic-input {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  padding: 0.875rem 1.25rem;
+  background: #FFFFFF;
+  color: #000000;
+  border: 4px solid #000000;
+  box-shadow: inset 3px 3px 0px 0px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.comic-input:focus {
+  outline: none;
+  box-shadow: 
+    inset 3px 3px 0px 0px rgba(0, 0, 0, 0.1),
+    0 0 0 4px var(--input-focus, #FACC15);
+}
+
+.comic-input::placeholder {
+  color: #999;
+  font-weight: 500;
+}
+
+/* 漫画进度条 */
+.comic-progress {
+  background: #E5E7EB;
+  border: 3px solid #000000;
+  height: 2rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 3px 3px 0px 0px rgba(0, 0, 0, 0.15);
+}
+
+.comic-progress-bar {
+  height: 100%;
+  background: var(--progress-color, #FACC15);
+  border-right: 3px solid #000000;
+  position: relative;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* 对角线条纹 */
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 8px,
+    rgba(0, 0, 0, 0.1) 8px,
+    rgba(0, 0, 0, 0.1) 16px
+  );
+}
+
+/* 漫画对话气泡 */
+.comic-speech-bubble {
+  background: #FFFFFF;
+  border: 4px solid #000000;
+  border-radius: 1.25rem;
+  padding: 1.25rem 1.75rem;
+  position: relative;
+  box-shadow: 5px 5px 0px 0px #000000;
+}
+
+.comic-speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -18px;
+  left: 40px;
+  width: 0;
+  height: 0;
+  border-left: 18px solid transparent;
+  border-right: 0px solid transparent;
+  border-top: 18px solid #000000;
+}
+
+.comic-speech-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 44px;
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 0px solid transparent;
+  border-top: 14px solid #FFFFFF;
+  z-index: 1;
+}
+
+/* 漫画头像 */
+.comic-avatar {
+  position: relative;
+  border: 4px solid #000000;
+  box-shadow: 4px 4px 0px 0px #000000;
+  overflow: hidden;
+  background: #FFFFFF;
+}
+
+/* 徽章/标签 */
+.comic-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  font-family: 'Bangers', cursive;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.875rem;
+  background: var(--badge-bg, #FACC15);
+  color: var(--badge-color, #000000);
+  border: 3px solid #000000;
+  box-shadow: 4px 4px 0px 0px #000000;
+  transform: rotate(var(--badge-rotation, 0deg));
+}
+
+/* 笔记本纸风格 */
+.notebook-paper {
+  background: #FFFEF5;
+  border: 4px solid #000000;
+  box-shadow: 6px 6px 0px 0px #000000;
+  position: relative;
+  padding: 2rem 2rem 2rem 3rem;
+  
+  /* 横线纹理 */
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 27px,
+    rgba(150, 150, 150, 0.4) 27px,
+    rgba(150, 150, 150, 0.4) 29px
+  );
+}
+
+.notebook-paper::before {
+  content: '';
+  position: absolute;
+  left: 2.5rem;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: rgba(255, 100, 100, 0.4);
+}
+
+/* 打字机文字 */
+.typewriter-text {
+  font-family: 'Special Elite', cursive;
+  letter-spacing: 0.03em;
+  line-height: 1.8;
+}
+
+/* 手写圈注 */
+.handwritten-circle {
+  position: absolute;
+  border: 3px solid #EF4444;
+  border-radius: 50%;
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+
+/* 滚动条 - 漫画风格 */
+.comic-scroll::-webkit-scrollbar {
+  width: 16px;
+}
+
+.comic-scroll::-webkit-scrollbar-track {
+  background: #F5F5F5;
+  border: 3px solid #000000;
+}
+
+.comic-scroll::-webkit-scrollbar-thumb {
+  background: var(--scroll-color, #FACC15);
+  border: 3px solid #000000;
+}
+
+.comic-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--scroll-hover, #FDE047);
+}
+
+/* 动画效果 */
+
+/* 弹跳进入 */
+@keyframes pop-in {
+  0% {
+    transform: scale(0) rotate(-180deg);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.1) rotate(10deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.pop-in {
+  animation: pop-in 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* 抖动 */
+@keyframes shake {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  25% { transform: translateX(-8px) rotate(-3deg); }
+  50% { transform: translateX(8px) rotate(3deg); }
+  75% { transform: translateX(-5px) rotate(-2deg); }
+}
+
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* 快速缩放 */
+@keyframes bounce-scale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.bounce-scale {
+  animation: bounce-scale 0.3s ease-in-out;
+}
+
+/* 涂鸦装饰类 */
+.graffiti-splash {
+  position: absolute;
+  pointer-events: none;
+  filter: blur(50px);
+  opacity: 0.6;
+}
+
+/* 斜线纹理 */
+.diagonal-stripes {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 12px,
+    rgba(0, 0, 0, 0.08) 12px,
+    rgba(0, 0, 0, 0.08) 24px
+  );
+}
+
+/* 倾斜角度辅助类 */
+.angled-left { --panel-rotation: -2deg; }
+.angled-right { --panel-rotation: 2deg; }
+.angled-left-strong { --panel-rotation: -3deg; }
+.angled-right-strong { --panel-rotation: 3deg; }
